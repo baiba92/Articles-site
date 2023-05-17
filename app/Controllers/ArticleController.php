@@ -2,55 +2,63 @@
 
 namespace ArticlesApp\Controllers;
 
-use ArticlesApp\ApiClient;
 use ArticlesApp\Core\View;
+use ArticlesApp\Exceptions\ResourceNotFoundException;
+use ArticlesApp\Services\Article\IndexArticleService;
+use ArticlesApp\Services\Article\Show\ShowArticleServiceRequest;
+use ArticlesApp\Services\Article\Show\ShowArticleService;
+use RuntimeException;
 
 class ArticleController
 {
-    private ApiClient $client;
-
-    public function __construct()
+    public function home(): View
     {
-        $this->client = new ApiClient();
+        try {
+            $count = 6;
+            $articleId = 1;
+            $service = new ShowArticleService();
+            $singleResponse = $service->execute(new ShowArticleServiceRequest($articleId));
+
+            $articles = [];
+            $start = 2;
+            for ($i = $start; $i < ($start + $count); $i++) {
+                $response = $service->execute(new ShowArticleServiceRequest($i));
+                $articles[] = $response->getArticle();
+            }
+
+            return new View('index', [
+                'first' => $singleResponse->getArticle(),
+                'articles' => $articles
+            ]);
+
+        } catch (RuntimeException $exception) {
+            //return new View ('notFound', []);
+        }
     }
 
     public function index(): View
     {
-        $count = 5;
-        $first = $this->client->fetchSingleArticle(1);
-        $comments = $this->client->fetchComments(1);
-        $articles = [];
-        $start = 2;
-        for ($i = $start; $i <= ($start + $count); $i++) {
-            $articles[] = $this->client->fetchSingleArticle($i);
-        }
-
-        return new View('index', [
-            'first' => $first,
-            'comments' => $comments,
-            'articles' => $articles
-        ]);
-    }
-
-    public function articles(): View
-    {
-        $articles = $this->client->fetchAllArticles();
+        $service = new IndexArticleService();
+        $articles = $service->execute();
 
         return new View('articles', [
             'articles' => $articles
         ]);
     }
 
-    public function single(): View
+    public function show(): View
     {
-        $id = (int)$_GET['articleId'];
+        try {
+            $articleId = (int)$_GET['articleId'];
+            $service = new ShowArticleService();
+            $response = $service->execute(new ShowArticleServiceRequest($articleId));
 
-        $article = $this->client->fetchSingleArticle($id);
-        $comments = $this->client->fetchComments($id);
-
-        return new View('article', [
-            'article' => $article,
-            'comments' => $comments
-        ]);
+            return new View('article', [
+                'article' => $response->getArticle(),
+                'comments' => $response->getComments()
+            ]);
+        } catch (ResourceNotFoundException $exception) {
+            //return new View ('notFound', []);
+        }
     }
 }

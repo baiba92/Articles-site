@@ -2,37 +2,37 @@
 
 namespace ArticlesApp\Controllers;
 
-use ArticlesApp\ApiClient;
 use ArticlesApp\Core\View;
+use ArticlesApp\Exceptions\ResourceNotFoundException;
+use ArticlesApp\Services\Article\IndexAuthorService;
+use ArticlesApp\Services\Author\Show\ShowAuthorService;
+use ArticlesApp\Services\Author\Show\ShowAuthorServiceRequest;
 
 class AuthorController
 {
-    private ApiClient $client;
-
-    public function __construct()
+    public function index(): View
     {
-        $this->client = new ApiClient();
-    }
-
-    public function authors(): View
-    {
-        $authors = $this->client->fetchAuthors();
+        $service = new IndexAuthorService();
+        $authors = $service->execute();
 
         return new View('authors', [
             'authors' => $authors
         ]);
     }
 
-    public function single(): View
+    public function show(): View
     {
-        $id = (int)$_GET['authorId'];
+        try {
+            $authorId = (int)$_GET['authorId'];
+            $service = new ShowAuthorService();
+            $response = $service->execute(new ShowAuthorServiceRequest($authorId));
 
-        $author = $this->client->fetchSingleAuthor($id);
-        $articles = $this->client->fetchArticlesByAuthorId($id);
-
-        return new View('author', [
-            'author' => $author,
-            'articles' => $articles
-        ]);
+            return new View('author', [
+                'author' => $response->getAuthor(),
+                'articles' => $response->getArticles()
+            ]);
+        } catch (ResourceNotFoundException $exception) {
+            //return new View ('notFound', []);
+        }
     }
 }

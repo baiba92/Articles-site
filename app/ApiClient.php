@@ -113,7 +113,7 @@ class ApiClient
         }
     }
 
-    public function fetchComments(int $articleId): array
+    public function fetchCommentsByArticleId(int $articleId): array
     {
         try {
             if (!Cache::has('article_comments_' . $articleId)) {
