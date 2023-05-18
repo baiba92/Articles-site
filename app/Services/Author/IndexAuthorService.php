@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace ArticlesApp\Services\Article;
+namespace ArticlesApp\Services\Author;
 
 use ArticlesApp\ApiClient;
 

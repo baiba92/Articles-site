@@ -1,32 +1,10 @@
 <?php declare(strict_types=1);
 
-use ArticlesApp\Services\Article\IndexArticleService;
+use ArticlesApp\Console\Router;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 $resource = $argv[1] ?? null;
-$id = $argv[2] ?? null;
+$ids = array_slice($argv, 2) ?? null;
 
-switch ($resource) {
-    case 'articles':
-
-        if ($id != null) {
-            // show service
-        } else {
-            // index service
-        }
-
-        break;
-    case 'authors':
-
-        if ($id != null) {
-            // show service
-        } else {
-            // index service
-        }
-
-        break;
-    default:
-        echo 'Invalid resource/command provided';
-        break;
-}
+Router::response($resource, $ids);
