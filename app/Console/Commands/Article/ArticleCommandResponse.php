@@ -20,7 +20,7 @@ class ArticleCommandResponse
     {
         echo '---------------------' . PHP_EOL;
         echo "[id: {$this->article->id()}]" . PHP_EOL;
-        echo "Author: {$this->article->author()->name()}" . PHP_EOL;
+        echo "Published by: {$this->article->author()->name()}" . PHP_EOL;
         echo '---' . strtoupper($this->article->title()) . '---' . PHP_EOL;
         echo $this->article->content() . PHP_EOL;
         echo PHP_EOL;
@@ -28,6 +28,7 @@ class ArticleCommandResponse
 
     public function getCommentsContent(): void
     {
+        echo 'Comments:' . PHP_EOL;
         foreach ($this->comments as $comment) {
             /** @var Comment $comment */
             echo strtoupper($comment->title()) . " ({$comment->eMail()})" . PHP_EOL;

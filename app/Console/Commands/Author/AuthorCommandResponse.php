@@ -31,6 +31,7 @@ class AuthorCommandResponse
 
     public function getArticlesContent(): void
     {
+        echo 'Articles:' . PHP_EOL;
         foreach ($this->articles as $article) {
             /** @var Article $article */
             echo "[id: {$article->id()}]" . PHP_EOL;

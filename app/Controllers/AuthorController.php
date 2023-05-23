@@ -4,7 +4,7 @@ namespace ArticlesApp\Controllers;
 
 use ArticlesApp\Core\View;
 use ArticlesApp\Exceptions\ResourceNotFoundException;
-use ArticlesApp\Services\Article\IndexAuthorService;
+use ArticlesApp\Services\Author\IndexAuthorService;
 use ArticlesApp\Services\Author\Show\ShowAuthorService;
 use ArticlesApp\Services\Author\Show\ShowAuthorServiceRequest;
 

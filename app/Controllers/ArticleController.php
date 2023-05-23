@@ -7,7 +7,6 @@ use ArticlesApp\Exceptions\ResourceNotFoundException;
 use ArticlesApp\Services\Article\IndexArticleService;
 use ArticlesApp\Services\Article\Show\ShowArticleServiceRequest;
 use ArticlesApp\Services\Article\Show\ShowArticleService;
-use RuntimeException;
 
 class ArticleController
 {
@@ -31,7 +30,7 @@ class ArticleController
                 'articles' => $articles
             ]);
 
-        } catch (RuntimeException $exception) {
+        } catch (ResourceNotFoundException $exception) {
             //return new View ('notFound', []);
         }
     }

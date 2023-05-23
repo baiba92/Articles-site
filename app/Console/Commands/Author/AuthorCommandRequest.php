@@ -4,15 +4,15 @@ namespace ArticlesApp\Console\Commands\Author;
 
 class AuthorCommandRequest
 {
-    private int $authorId;
+    private ?array $authorIds;
 
-    public function __construct(int $authorId)
+    public function __construct(array $authorIds)
     {
-        $this->authorId = $authorId;
+        $this->authorIds = $authorIds;
     }
 
-    public function getArticleId(): int
+    public function getAuthorIds(): array
     {
-        return $this->authorId;
+        return $this->authorIds;
     }
 }

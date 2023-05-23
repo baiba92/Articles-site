@@ -2,19 +2,20 @@
 
 namespace ArticlesApp\Services\Author;
 
-use ArticlesApp\ApiClient;
+use ArticlesApp\Repositories\Author\AuthorRepository;
+use ArticlesApp\Repositories\Author\JsonPlaceholderAuthorRepository;
 
 class IndexAuthorService
 {
-    private ApiClient $client;
+    private AuthorRepository $authorRepository;
 
     public function __construct()
     {
-        $this->client = new ApiClient();
+        $this->authorRepository = new JsonPlaceholderAuthorRepository();
     }
 
     public function execute(): array
     {
-        return $this->client->fetchAuthors();
+        return $this->authorRepository->fetchAuthors();
     }
 }

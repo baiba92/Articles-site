@@ -4,15 +4,15 @@ namespace ArticlesApp\Console\Commands\Article;
 
 class ArticleCommandRequest
 {
-    private int $articleId;
+    private ?array $articleIds;
 
-    public function __construct(int $articleId)
+    public function __construct(array $articleIds)
     {
-        $this->articleId = $articleId;
+        $this->articleIds = $articleIds;
     }
 
-    public function getArticleId(): int
+    public function getArticleIds(): array
     {
-        return $this->articleId;
+        return $this->articleIds;
     }
 }

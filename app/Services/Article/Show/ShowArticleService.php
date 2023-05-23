@@ -2,27 +2,44 @@
 
 namespace ArticlesApp\Services\Article\Show;
 
-use ArticlesApp\ApiClient;
 use ArticlesApp\Exceptions\ResourceNotFoundException;
+use ArticlesApp\Repositories\Article\ArticleRepository;
+use ArticlesApp\Repositories\Article\JsonPlaceholderArticleRepository;
+use ArticlesApp\Repositories\Author\AuthorRepository;
+use ArticlesApp\Repositories\Author\JsonPlaceholderAuthorRepository;
+use ArticlesApp\Repositories\Comment\CommentRepository;
+use ArticlesApp\Repositories\Comment\JsonPlaceholderCommentRepository;
 
 class ShowArticleService
 {
-    private ApiClient $client;
+    private ArticleRepository $articleRepository;
+    private AuthorRepository $authorRepository;
+    private CommentRepository $commentRepository;
 
     public function __construct()
     {
-        $this->client = new ApiClient();
+        $this->articleRepository = new JsonPlaceholderArticleRepository();
+        $this->authorRepository = new JsonPlaceholderAuthorRepository();
+        $this->commentRepository = new JsonPlaceholderCommentRepository();
     }
 
     public function execute(ShowArticleServiceRequest $request): ShowArticleServiceResponse
     {
-        $article = $this->client->fetchSingleArticle($request->getArticleId());
+        $article = $this->articleRepository->fetchSingleArticle($request->getArticleId());
 
         if ($article == null) {
-            throw new ResourceNotFoundException('ArticleCommands by id ' . $request->getArticleId() . ' not found');
+            throw new ResourceNotFoundException('Article by id ' . $request->getArticleId() . ' not found');
         }
 
-        $comments = $this->client->fetchCommentsByArticleId($request->getArticleId());
+        $author = $this->authorRepository->fetchSingleAuthor($article->authorId());
+
+        if ($author == null) {
+            throw new ResourceNotFoundException('Author by id ' . $article->authorId() . ' not found');
+        }
+
+        $article->setAuthor($author);
+
+        $comments = $this->commentRepository->fetchCommentsByArticleId($article->id());
 
         return new ShowArticleServiceResponse($article, $comments);
     }
