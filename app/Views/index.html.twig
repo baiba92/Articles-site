@@ -25,10 +25,10 @@
                 <div class="flex flex-1 flex-col justify-bottom h-1/6">
                     <div class="flex flex-wrap justify-between pt-12">
                         <div class="flex items-center space-x-4">
-                            <img class="w-7 h-7 rounded-full"
-                                 src="https://placehold.co/20x20"
+                            <img class="w-8 rounded-full"
+                                 src="{{ first.author.imageUrl }}"
                                  alt=""/>
-                            <form action="/author" method="GET">
+                            <form action="/author/{{ first.author.id }}" method="GET">
                                 <p class="text-gray-500">
                                     Published by
                                     <button name="authorId" value="{{ first.author.id }}"
@@ -45,7 +45,7 @@
             <div class="grow-0 shrink-0 basis-auto w-1/2 pl-3">
                 <div class="relative overflow-hidden bg-no-repeat bg-cover ripple shadow-lg rounded-lg"
                      style="background-position: 50%" data-mdb-ripple="true" data-mdb-ripple-color="light">
-                    <img src="https://placehold.co/600x400" class="w-full" alt=""/>
+                    <img src="{{ first.imageUrl }}" class="w-full" alt=""/>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
                         <div class="grow-0 shrink-0 basis-auto">
                             <div class="relative overflow-hidden bg-no-repeat bg-cover ripple shadow-md rounded-lg"
                                  style="background-position: 50%" data-mdb-ripple="true" data-mdb-ripple-color="light">
-                                <img src="https://placehold.co/270x180" class="w-full" alt=""/>
+                                <img src="{{ article.imageUrl }}" class="w-64" alt=""/>
                             </div>
                         </div>
 
@@ -76,8 +76,8 @@
                             <div class="flex flex-1 flex-col justify-bottom h-1/4">
                                 <div class="flex flex-wrap justify-between pt-4">
                                     <div class="flex items-center space-x-4">
-                                        <img class="w-7 h-7 rounded-full"
-                                             src="https://placehold.co/20x20"
+                                        <img class="w-8 rounded-full"
+                                             src="{{ article.author.imageUrl }}"
                                              alt=""/>
                                         <form action="/author/{{ article.author.id }}" method="GET">
                                             <p class="text-gray-500">

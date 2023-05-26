@@ -8,6 +8,7 @@ class Article
     private int $authorId;
     private string $title;
     private string $content;
+    private string $imageUrl = 'https://placehold.co/600x400';
     private ?Author $author = null;
 
     public function __construct
@@ -42,6 +43,11 @@ class Article
     public function content(): string
     {
         return $this->content;
+    }
+
+    public function imageUrl(): string
+    {
+        return $this->imageUrl;
     }
 
     public function author(): ?Author

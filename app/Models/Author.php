@@ -6,6 +6,7 @@ class Author
 {
     private int $id;
     private string $name;
+    private string $imageUrl = 'https://placehold.co/400x400';
     private ?string $userName;
     private ?string $eMail;
     private ?string $website;
@@ -40,6 +41,11 @@ class Author
     public function name(): string
     {
         return $this->name;
+    }
+
+    public function imageUrl(): string
+    {
+        return $this->imageUrl;
     }
 
     public function userName(): string
