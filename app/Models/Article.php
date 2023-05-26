@@ -49,7 +49,7 @@ class Article
         return $this->author;
     }
 
-    public function setAuthor(Author $author): void
+    public function setAuthor(Author $author = null): void
     {
         $this->author = $author;
     }

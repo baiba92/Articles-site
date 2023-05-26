@@ -4,11 +4,8 @@ namespace ArticlesApp\Services\Article\Show;
 
 use ArticlesApp\Exceptions\ResourceNotFoundException;
 use ArticlesApp\Repositories\Article\ArticleRepository;
-use ArticlesApp\Repositories\Article\JsonPlaceholderArticleRepository;
 use ArticlesApp\Repositories\Author\AuthorRepository;
-use ArticlesApp\Repositories\Author\JsonPlaceholderAuthorRepository;
 use ArticlesApp\Repositories\Comment\CommentRepository;
-use ArticlesApp\Repositories\Comment\JsonPlaceholderCommentRepository;
 
 class ShowArticleService
 {
@@ -16,11 +13,16 @@ class ShowArticleService
     private AuthorRepository $authorRepository;
     private CommentRepository $commentRepository;
 
-    public function __construct()
+    public function __construct
+    (
+        ArticleRepository $articleRepository,
+        AuthorRepository $authorRepository,
+        CommentRepository $commentRepository
+    )
     {
-        $this->articleRepository = new JsonPlaceholderArticleRepository();
-        $this->authorRepository = new JsonPlaceholderAuthorRepository();
-        $this->commentRepository = new JsonPlaceholderCommentRepository();
+        $this->articleRepository = $articleRepository;
+        $this->authorRepository = $authorRepository;
+        $this->commentRepository = $commentRepository;
     }
 
     public function execute(ShowArticleServiceRequest $request): ShowArticleServiceResponse
@@ -33,9 +35,10 @@ class ShowArticleService
 
         $author = $this->authorRepository->fetchSingleAuthor($article->authorId());
 
-        if ($author == null) {
-            throw new ResourceNotFoundException('Author by id ' . $article->authorId() . ' not found');
-        }
+        // IF UNCOMMENTED, ERROR WHEN TRYING TO OPEN NEWLY ADDED ARTICLES, BECAUSE AUTHOR IS NOT FROM API
+        //if ($author == null) {
+        //    throw new ResourceNotFoundException('Author by id ' . $article->authorId() . ' not found');
+        //}
 
         $article->setAuthor($author);
 

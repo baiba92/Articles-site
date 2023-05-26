@@ -2,6 +2,7 @@
 
 namespace ArticlesApp\Core;
 
+use ArticlesApp\Container;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
@@ -31,11 +32,13 @@ class Router
                 return null;
             case Dispatcher::FOUND:
                 $handler = $routeInfo[1];
+                $vars = $routeInfo[2];
 
                 [$controllerName, $methodName] = $handler;
-                $controllerName = new $controllerName;
 
-                return $controllerName->{$methodName}();
+                $container = new Container();
+                $controller = $container->getContainer()->get($controllerName);
+                return $controller->{$methodName}($vars);
         }
         return null;
     }

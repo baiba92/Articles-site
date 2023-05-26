@@ -44,7 +44,7 @@
                         </div>
                         <div class="w-full">
                             <div class="max-w-2xl">
-                                <form action="/author" method="GET">
+                                <form action="/author/{{ article.author.id }}" method="GET">
                                     <p class="text-gray-400 pb-1">
                                         Published by
                                         <button name="authorId" value="{{ article.author.id }}"
@@ -54,7 +54,7 @@
                                     </p>
                                 </form>
 
-                                <form action="/article" method="GET">
+                                <form action="/article/{{ article.id }}" method="GET">
                                     <button type="submit" name="articleId" value="{{ article.id }}"
                                             class="text-left text-xl font-bold tracking-tight text-gray-900 hover:text-gray-600">
                                         {{ article.title|capitalize }}

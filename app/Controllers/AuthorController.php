@@ -10,10 +10,23 @@ use ArticlesApp\Services\Author\Show\ShowAuthorServiceRequest;
 
 class AuthorController
 {
+    private IndexAuthorService $indexAuthorService;
+    private ShowAuthorService $showAuthorService;
+
+    public function __construct
+    (
+        IndexAuthorService $indexAuthorService,
+        ShowAuthorService $showAuthorService
+    )
+    {
+        $this->indexAuthorService = $indexAuthorService;
+        $this->showAuthorService = $showAuthorService;
+    }
+
+
     public function index(): View
     {
-        $service = new IndexAuthorService();
-        $authors = $service->execute();
+        $authors = $this->indexAuthorService->execute();
 
         return new View('authors', [
             'authors' => $authors
@@ -24,10 +37,9 @@ class AuthorController
     {
         try {
             $authorId = (int)$_GET['authorId'];
-            $service = new ShowAuthorService();
-            $response = $service->execute(new ShowAuthorServiceRequest($authorId));
+            $response = $this->showAuthorService->execute(new ShowAuthorServiceRequest($authorId));
 
-            return new View('author', [
+            return new View('singleAuthor', [
                 'author' => $response->getAuthor(),
                 'articles' => $response->getArticles()
             ]);

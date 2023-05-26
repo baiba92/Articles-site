@@ -5,19 +5,23 @@ namespace ArticlesApp\Services\Author\Show;
 use ArticlesApp\Exceptions\ResourceNotFoundException;
 use ArticlesApp\Models\Article;
 use ArticlesApp\Repositories\Article\ArticleRepository;
-use ArticlesApp\Repositories\Article\JsonPlaceholderArticleRepository;
+
 use ArticlesApp\Repositories\Author\AuthorRepository;
-use ArticlesApp\Repositories\Author\JsonPlaceholderAuthorRepository;
+
 
 class ShowAuthorService
 {
     private AuthorRepository $authorRepository;
     private ArticleRepository $articleRepository;
 
-    public function __construct()
+    public function __construct
+    (
+        AuthorRepository $authorRepository,
+        ArticleRepository $articleRepository
+    )
     {
-        $this->authorRepository = new JsonPlaceholderAuthorRepository();
-        $this->articleRepository = new JsonPlaceholderArticleRepository();
+        $this->authorRepository = $authorRepository;
+        $this->articleRepository = $articleRepository;
     }
 
     public function execute(ShowAuthorServiceRequest $request): ShowAuthorServiceResponse

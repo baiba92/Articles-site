@@ -3,22 +3,22 @@
 namespace ArticlesApp\Services\Article;
 
 use ArticlesApp\Models\Article;
-use ArticlesApp\Models\Author;
 use ArticlesApp\Repositories\Article\ArticleRepository;
-use ArticlesApp\Repositories\Article\JsonPlaceholderArticleRepository;
 use ArticlesApp\Repositories\Author\AuthorRepository;
-use ArticlesApp\Repositories\Author\JsonPlaceholderAuthorRepository;
 
 class IndexArticleService
 {
     private ArticleRepository $articleRepository;
     private AuthorRepository $authorRepository;
 
-    public function __construct()
+    public function __construct
+    (
+        ArticleRepository $articleRepository,
+        AuthorRepository $authorRepository
+    )
     {
-        $this->articleRepository = new JsonPlaceholderArticleRepository();
-        $this->authorRepository = new JsonPlaceholderAuthorRepository();
-
+        $this->articleRepository = $articleRepository;
+        $this->authorRepository = $authorRepository;
     }
 
     public function execute(): array

@@ -6,21 +6,21 @@ class Author
 {
     private int $id;
     private string $name;
-    private string $userName;
-    private string $eMail;
-    private string $website;
-    private string $homeTown;
-    private string $workingPlace;
+    private ?string $userName;
+    private ?string $eMail;
+    private ?string $website;
+    private ?string $homeTown;
+    private ?string $workingPlace;
 
     public function __construct
     (
         int    $id,
         string $name,
-        string $userName,
-        string $eMail,
-        string $website,
-        string $homeTown,
-        string $workingPlace
+        string $userName = null,
+        string $eMail = null,
+        string $website = null,
+        string $homeTown = null,
+        string $workingPlace = null
     )
     {
         $this->id = $id;
